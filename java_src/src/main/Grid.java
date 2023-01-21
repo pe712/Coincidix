@@ -315,8 +315,8 @@ public class Grid {
             return;
         }
         System.out.println("The grid number " + grilleId
-        + " look like above (s is a smiley). Do you want
-                System.out.println(partie);
+        + " look like above (s is a smiley). Do you want to solve it (type S)? Do you want to modify it (type M)?");
+        System.out.println(partie);
         String answer = scanner.nextLine();
         if (answer.equals("M")) {
             Grid.saveNewGrid(grilleId, scanner);
