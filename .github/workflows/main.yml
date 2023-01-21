@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+    - master
+  
+jobs:
+  build:
+    name: build jar file
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    
+    - run: mkdir release
+    - run: cd bin
+    - run: jar cfmv ..\release\Coincidix.jar ..\MANIFEST.MF main/*.class ../data
+    
+    - uses: actions/upload-artifact@v3
+      with:
+        name: my-artifact
+        path: ..\release\Coincidix.jar
+
+
+      
