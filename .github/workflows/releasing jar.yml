@@ -23,6 +23,7 @@ jobs:
 
     - name: build jar
       run: |
+        ls
         cd java_src/bin
         jar cfmv ../../Coincidix.jar ../MANIFEST.MF main/*.class ../data
 
