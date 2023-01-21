@@ -20,10 +20,12 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-
-    - name: build jar
+    
+    - name: Build with Ant
+      run: ant -noinput -buildfile build.xml
+    
+    - name: export jar
       run: |
-        ls
         cd java_src/bin
         jar cfmv ../../Coincidix.jar ../MANIFEST.MF main/*.class ../data
 
@@ -31,7 +33,7 @@ jobs:
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add Coincidix.jar
+        git add -A
         git commit -a -m "latest release"
 
     - name: Push changes
