@@ -42,7 +42,7 @@ public class GridTest {
 
         System.out.println("Test initialisation des pièces");
         partie3 = new Grid("data/grille/grille3.txt");
-        partie3.initializeAllPieces("data/pieces");
+        partie3.initializeAllPieces("data/pieces", 9);
         System.out.println(partie3.pieces);
 
         // System.out.println("\nTest placabilité de 1 pièces");
@@ -55,13 +55,13 @@ public class GridTest {
 
         System.out.println("Test solvabilité grille3");
         partie3 = new Grid("data/grille/grille3.txt");
-        partie3.initializeAllPieces("data/pieces");
+        partie3.initializeAllPieces("data/pieces", 9);
         assert partie3.solve();
         System.out.println(partie3);
 
         System.out.println("Test solvabilité grille8");
         Grid partie8 = new Grid("data/grille/grille8.txt");
-        partie8.initializeAllPieces("data/pieces");
+        partie8.initializeAllPieces("data/pieces", 9);
         assert partie8.solve();
         System.out.println(partie8);
 
@@ -104,7 +104,7 @@ public class GridTest {
         partie3.place(new Piece("data/pieces/piece8.txt", 6), new Coordinate(4, 1, 6));
         System.out.println(partie3);
         System.out.println("solving...");
-        partie3.initializeAllPieces("data/pieces");
+        partie3.initializeAllPieces("data/pieces", 9);
         assert !partie3.solve(8);
         System.out.println(partie3);
     }

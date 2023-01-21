@@ -2,11 +2,7 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,13 +33,25 @@ public class Grid {
 
     public Grid(String filename) throws FileNotFoundException {
         File file = new File(filename);
-        try (Scanner scanner = new Scanner(file);) {
-            this.n = Integer.valueOf(scanner.nextLine());
-            while (scanner.hasNext()) {
-                String strCoord = scanner.nextLine() + "," + n;
-                this.smileys.add(new Coordinate(strCoord));
+        Scanner scanner;
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            // we are in the .jar (or the file do not exists)
+            try {
+                InputStream in = this.getClass().getResourceAsStream("/" + filename);
+                scanner = new Scanner(in);
+            } catch (NullPointerException f) {
+                throw new FileNotFoundException("The file for this level does not exists");
             }
         }
+
+        this.n = Integer.valueOf(scanner.nextLine());
+        while (scanner.hasNext()) {
+            String strCoord = scanner.nextLine() + "," + n;
+            this.smileys.add(new Coordinate(strCoord));
+        }
+        scanner.close();
         fillEmptyCells();
     }
 
@@ -55,12 +63,11 @@ public class Grid {
         }
     }
 
-    public void initializeAllPieces(String folder) throws IOException {
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(folder))) {
-            for (Path file : stream) {
-                Piece piece = new Piece(file.toString(), this.n);
-                this.pieces.add(piece);
-            }
+    public void initializeAllPieces(String folder, int k) throws FileNotFoundException{
+        for (int i = 0; i < k; i++) {
+            String filename = "data/pieces/piece" + k + ".txt";
+            Piece piece = new Piece(filename, this.n);
+            this.pieces.add(piece);
         }
     }
 
@@ -256,22 +263,26 @@ public class Grid {
             partie = new Grid("data/grille/grille" + grilleId + ".txt");
         } catch (FileNotFoundException e) {
             System.out.println(
-                    "The level has not been set up. Please go in data/grille and describe the position of your smileys");
+                    "The level has not been set up. Do you want to set it up ? Type Y for yes and N for no");
+            scannner = new Scanner(System.in);
+
+            scannner.close();
             return;
         }
         try {
-            partie.initializeAllPieces("data/pieces");
-        } catch (IOException e) {
-            System.out.println("data/pieces is not a folder");
+            partie.initializeAllPieces("data/pieces", 9);
+        } catch (FileNotFoundException e) {
+            System.out.println("folder data/pieces not found");
             return;
         }
+
         System.out.println("Solving...");
         final long startTime = System.currentTimeMillis();
-        
+
         partie.solve();
         final long endTime = System.currentTimeMillis();
         System.out.println(partie);
-        System.out.println("Done in "+(endTime - startTime)+" ms\n");
+        System.out.println("Done in " + (endTime - startTime) + " ms\n");
         System.out.println(partie.pieces);
     }
 }
