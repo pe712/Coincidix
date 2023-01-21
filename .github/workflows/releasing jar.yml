@@ -22,7 +22,9 @@ jobs:
         distribution: 'temurin'
     
     - name: Build with Ant
-      run: ant -noinput -buildfile build.xml
+      run: |
+        cd java_src
+        ant -noinput -buildfile build.xml
     
     - name: export jar
       run: |
