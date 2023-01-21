@@ -20,8 +20,11 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-
-    - name: build jar
+    
+    - name: Build with Ant
+      run: ant -noinput -buildfile build.xml
+    
+    - name: export jar
       run: |
         cd java_src/bin
         jar cfmv ../../Coincidix.jar ../MANIFEST.MF main/*.class ../data
