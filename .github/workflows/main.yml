@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-    - master
+    - dev
   
 jobs:
   build:
@@ -21,16 +21,15 @@ jobs:
     
     - name: build jar
       run: |
-        mkdir release
         cd bin
-        jar cfmv ../release/Coincidix.jar ../MANIFEST.MF main/*.class ../data
+        jar cfmv ../Coincidix.jar ../MANIFEST.MF main/*.class ../data
 
     - name: Commit files
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add -A
-        git commit -a -m "Add changes"
+        git add -Coincidix.jar
+        git commit -a -m "last release"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
