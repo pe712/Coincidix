@@ -26,12 +26,6 @@ jobs:
         cd bin
         jar cfmv ../Coincidix.jar ../MANIFEST.MF main/*.class ../data
 
-    - name: checkout
-      uses: actions/checkout@v3
-      with:
-          ref: master
-          fetch-depth: 0
-
     - name: Commit files
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
