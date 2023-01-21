@@ -18,6 +18,8 @@ jobs:
         distribution: 'temurin'
     
     - run: mkdir release
+    - run: pwd
+    - run: ls
     - run: cd bin
     - run: ls ..
     - run: jar cfmv ..\release\Coincidix.jar ..\MANIFEST.MF main/*.class ../data
