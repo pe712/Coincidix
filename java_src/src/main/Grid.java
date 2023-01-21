@@ -247,6 +247,15 @@ public class Grid {
         }
     }
 
+    public static void saveNewGrid(int id){
+        File dataDirectory = new File("../data/grille/");
+        if(!dataDirectory.exists()){
+            dataDirectory.mkdirs();
+        }
+        System.out.println(dataDirectory.getAbsolutePath());
+        System.out.println("We can save the grid here");
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the number of the level you want to solve");
@@ -266,7 +275,7 @@ public class Grid {
                     "The level has not been set up. Do you want to set it up ? Type Y for yes and N for no");
             String answer = scanner.nextLine();
             if (answer.equals("Y")) {
-                // do smth
+                Grid.saveNewGrid(grilleId);
             } else if (!answer.equals("N")) {
                 System.out.println("Invalid answer, solver quitting...");
             }
