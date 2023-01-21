@@ -19,11 +19,12 @@ jobs:
     
     - run: mkdir release
     - run: cd bin && jar cfmv ../release/Coincidix.jar ../MANIFEST.MF main/*.class ../data
-    
+    - run: ls
+    - run: ls release
     - uses: actions/upload-artifact@v3
       with:
         name: my-artifact
-        path: release\Coincidix.jar
+        path: release/Coincidix.jar
 
 
       
