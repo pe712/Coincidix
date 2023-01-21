@@ -248,7 +248,7 @@ public class Grid {
     }
 
     public static void saveNewGrid(int id){
-        File dataDirectory = new File("../data/grille/");
+        File dataDirectory = new File("data/grille/");
         if(!dataDirectory.exists()){
             dataDirectory.mkdirs();
         }
