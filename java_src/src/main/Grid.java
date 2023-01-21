@@ -2,6 +2,8 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -247,16 +249,46 @@ public class Grid {
         }
     }
 
-    public static void saveNewGrid(int id){
+    public static void saveNewGrid(int id, Scanner scanner) throws IOException {
+        System.out.println(
+                "\nYou will need to enter the coordinates of every smiley in the grid. There are 9 smileys in a grid. The coordinate are going from (0,0) top left corner to (4,4) bottom right corner\n");
         File dataDirectory = new File("data/grille/");
-        if(!dataDirectory.exists()){
+        if (!dataDirectory.exists()) {
             dataDirectory.mkdirs();
+            dataDirectory.createNewFile();
         }
-        System.out.println(dataDirectory.getAbsolutePath());
-        System.out.println("We can save the grid here");
+        File gridFile = new File("data/grille/grille" + id + ".txt");
+        gridFile.createNewFile();
+        FileWriter writer = new FileWriter(gridFile);
+        writer.write("6\n");
+        for (int i = 1; i <= 9; i++) {
+            System.out.println("Input x coord as a number");
+            int x, y;
+            try {
+                x = Integer.valueOf(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("The number entered is not valid\n Aborting...");
+                scanner.close();
+                writer.close();
+                return;
+            }
+            System.out.println("Input y coord as a number");
+            try {
+                y = Integer.valueOf(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("The number entered is not valid\n Aborting...");
+                scanner.close();
+                writer.close();
+                return;
+            }
+            String coord = new String(x + "," + y);
+            System.out.println("The coord entered is " + coord + "\n");
+            writer.write(coord + "\n");
+        }
+        writer.close();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the number of the level you want to solve");
         int grilleId;
@@ -275,13 +307,27 @@ public class Grid {
                     "The level has not been set up. Do you want to set it up ? Type Y for yes and N for no");
             String answer = scanner.nextLine();
             if (answer.equals("Y")) {
-                Grid.saveNewGrid(grilleId);
+                Grid.saveNewGrid(grilleId, scanner);
             } else if (!answer.equals("N")) {
                 System.out.println("Invalid answer, solver quitting...");
             }
             scanner.close();
             return;
         }
+        System.out.println("The grid number " + grilleId
+        + " look like above (s is a smiley). Do you want
+                System.out.println(partie);
+        String answer = scanner.nextLine();
+        if (answer.equals("M")) {
+            Grid.saveNewGrid(grilleId, scanner);
+            scanner.close();
+            return;
+        } else if (!answer.equals("S")) {
+            System.out.println("Invalid answer, solver quitting...");
+            scanner.close();
+            return;
+        }
+
         try {
             System.out.println("Pieces used:\n");
             partie.initializeAllPieces("data/pieces", 9);
@@ -310,7 +356,7 @@ public class Grid {
         }
         System.out.println("\nThe 's' represents a hole in the piece and corresponds to a smiley in the grid\n");
         if (nb == 9) {
-            System.out.println(partie.pieces+"\n");
+            System.out.println(partie.pieces + "\n");
             System.out.println(partie);
         } else {
             Iterator<Piece> piecesIterator = partie.pieces.iterator();
