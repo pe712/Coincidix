@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-    - dev
+    - master
 
 jobs:
   build:
@@ -23,8 +23,8 @@ jobs:
 
     - name: build jar
       run: |
-        cd bin
-        jar cfmv ../Coincidix.jar ../MANIFEST.MF main/*.class ../data
+        cd java_src/bin
+        jar cfmv ../../Coincidix.jar ../MANIFEST.MF main/*.class ../data
 
     - name: Commit files
       run: |
