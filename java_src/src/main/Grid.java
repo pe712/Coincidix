@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Map.Entry;
 
@@ -63,9 +64,9 @@ public class Grid {
         }
     }
 
-    public void initializeAllPieces(String folder, int k) throws FileNotFoundException{
-        for (int i = 0; i < k; i++) {
-            String filename = "data/pieces/piece" + k + ".txt";
+    public void initializeAllPieces(String folder, int k) throws FileNotFoundException {
+        for (int i = 1; i <= k; i++) {
+            String filename = "data/pieces/piece" + i + ".txt";
             Piece piece = new Piece(filename, this.n);
             this.pieces.add(piece);
         }
@@ -247,42 +248,67 @@ public class Grid {
     }
 
     public static void main(String[] args) {
-        Scanner scannner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the number of the level you want to solve");
         int grilleId;
         try {
-            grilleId = Integer.valueOf(scannner.nextLine());
+            grilleId = Integer.valueOf(scanner.nextLine());
         } catch (NumberFormatException e) {
             System.out.println("The number entered is not valid");
-            scannner.close();
+            scanner.close();
             return;
         }
-        scannner.close();
         Grid partie;
         try {
             partie = new Grid("data/grille/grille" + grilleId + ".txt");
         } catch (FileNotFoundException e) {
             System.out.println(
                     "The level has not been set up. Do you want to set it up ? Type Y for yes and N for no");
-            scannner = new Scanner(System.in);
-
-            scannner.close();
+            String answer = scanner.nextLine();
+            if (answer.equals("Y")) {
+                // do smth
+            } else if (!answer.equals("N")) {
+                System.out.println("Invalid answer, solver quitting...");
+            }
+            scanner.close();
             return;
         }
         try {
+            System.out.println("Pieces used:\n");
             partie.initializeAllPieces("data/pieces", 9);
+            System.out.println(partie.pieces);
         } catch (FileNotFoundException e) {
             System.out.println("folder data/pieces not found");
+            scanner.close();
             return;
         }
 
-        System.out.println("Solving...");
+        System.out.println("\nSolving...\n");
         final long startTime = System.currentTimeMillis();
 
         partie.solve();
         final long endTime = System.currentTimeMillis();
-        System.out.println(partie);
         System.out.println("Done in " + (endTime - startTime) + " ms\n");
-        System.out.println(partie.pieces);
+
+        System.out.println("How many pieces do you want to see? Enter the number. There is a total of 9 pieces");
+        int nb;
+        try {
+            nb = Integer.valueOf(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("The number entered is not valid");
+            scanner.close();
+            return;
+        }
+        System.out.println("\nThe 's' represents a hole in the piece and corresponds to a smiley in the grid\n");
+        if (nb == 9) {
+            System.out.println(partie.pieces+"\n");
+            System.out.println(partie);
+        } else {
+            Iterator<Piece> piecesIterator = partie.pieces.iterator();
+            for (int i = 0; i < nb; i++) {
+                System.out.println(piecesIterator.next());
+            }
+        }
+        scanner.close();
     }
 }
