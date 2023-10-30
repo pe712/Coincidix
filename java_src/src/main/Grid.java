@@ -251,7 +251,7 @@ public class Grid {
 
     public static void saveNewGrid(int id, Scanner scanner) throws IOException {
         System.out.println(
-                "\nYou will need to enter the coordinates of every smiley in the grid. There are 10 smileys in a grid. The coordinate are going from (0,0) top left corner to (4,4) bottom right corner\n");
+                "\nYou will need to enter the coordinates of every smiley in the grid. There are 10 smileys in a grid. The coordinate are going from (0,0) top left corner to (5,5) bottom right corner. X is vertical axis and Y is horizontal axis.\n");
         File dataDirectory = new File("data/grille/");
         if (!dataDirectory.exists()) {
             dataDirectory.mkdirs();
