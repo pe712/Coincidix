@@ -66,8 +66,8 @@ public class Grid {
         }
     }
 
-    public void initializeAllPieces(String folder, int k) throws FileNotFoundException {
-        for (int i = 1; i <= k; i++) {
+    public void initializeAllPieces(String folder, int pieceNumber) throws FileNotFoundException {
+        for (int i = 1; i <= pieceNumber; i++) {
             String filename = "data/pieces/piece" + i + ".txt";
             Piece piece = new Piece(filename, this.n);
             this.pieces.add(piece);
@@ -251,7 +251,7 @@ public class Grid {
 
     public static void saveNewGrid(int id, Scanner scanner) throws IOException {
         System.out.println(
-                "\nYou will need to enter the coordinates of every smiley in the grid. There are 10 smileys in a grid. The coordinate are going from (0,0) top left corner to (5,5) bottom right corner. X is vertical axis and Y is horizontal axis.\n");
+                "\nYou will need to enter the coordinates of every smiley in the grid. There are 10 smileys in a grid. Bottom left is (1,1) and top right is (6,6).\n");
         File dataDirectory = new File("data/grille/");
         if (!dataDirectory.exists()) {
             dataDirectory.mkdirs();
@@ -260,30 +260,27 @@ public class Grid {
         File gridFile = new File("data/grille/grille" + id + ".txt");
         gridFile.createNewFile();
         FileWriter writer = new FileWriter(gridFile);
-        writer.write("6\n");
+        int gridLength = 6;
+        writer.write(gridLength + "\n");
         for (int i = 1; i <= 10; i++) {
-            System.out.println("Input x coord as a number");
             int x, y;
             try {
+                System.out.println("Input x coord as a number");
                 x = Integer.valueOf(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("The number entered is not valid\n Aborting...");
-                scanner.close();
-                writer.close();
-                return;
-            }
-            System.out.println("Input y coord as a number");
-            try {
+                System.out.println("Input y coord as a number");
                 y = Integer.valueOf(scanner.nextLine());
             } catch (NumberFormatException e) {
                 System.out.println("The number entered is not valid\n Aborting...");
                 scanner.close();
                 writer.close();
+                gridFile.delete();
                 return;
             }
-            String coord = new String(x + "," + y);
-            System.out.println("The coord entered is " + coord + "\n");
-            writer.write(coord + "\n");
+            System.out.println("The coord entered is " + x + "," + y + "\n");
+            // the coords are inversed
+            int correctedY = x-1;
+            int correctedX = gridLength - y;
+            writer.write(correctedX + "," + correctedY + "\n");
         }
         writer.close();
     }
@@ -315,7 +312,7 @@ public class Grid {
             return;
         }
         System.out.println("The grid number " + grilleId
-        + " look like above (s is a smiley). Do you want to solve it (type S)? Do you want to modify it (type M)?");
+                + " look like above (s is a smiley). Do you want to solve it (type S)? Do you want to modify it (type M)?");
         System.out.println(partie);
         String answer = scanner.nextLine();
         if (answer.equals("M")) {

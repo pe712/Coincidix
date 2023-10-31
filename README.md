@@ -15,3 +15,14 @@ You can then start solving levels. If it has not been registred, go to "data/gri
 ## Getting started in the project
 All the needed files are in java_src folder. Feel free to fork the repository
 It is important to enable assertion as they are used by the program
+
+To compile the archive and run it:
+```java
+javac .\src\main\* -d .\bin\; cd ./bin; jar cfmv ../../Coincidix.jar ../MANIFEST.MF main/*.class ../data; cd ..
+java -ea -jar ../Coincidix.jar
+```
+
+Else:
+```java
+javac .\src\main\* -d .\bin\; java -cp ./bin main.Grid
+```
