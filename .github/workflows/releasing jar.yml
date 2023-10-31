@@ -24,7 +24,7 @@ jobs:
       - name: Build
         run: |
           cd java
-          javac .\src\main\* -d .\bin\;
+          javac src/main/* -d bin
 
       - name: export jar
         run: |
