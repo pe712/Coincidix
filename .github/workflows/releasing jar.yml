@@ -28,7 +28,7 @@ jobs:
 
       - name: export jar
         run: |
-          cd bin
+          cd java/bin
           jar cfmv ../../Coincidix.jar ../MANIFEST.MF main/*.class ../data
 
       - name: Commit files
