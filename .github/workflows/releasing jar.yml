@@ -23,12 +23,12 @@ jobs:
 
       - name: Build with Ant
         run: |
-          cd java_src
+          cd java
           ant -noinput -buildfile build.xml
 
       - name: export jar
         run: |
-          cd java_src/bin
+          cd java/bin
           jar cfmv ../../Coincidix.jar ../MANIFEST.MF main/*.class ../data
 
       - name: Commit files

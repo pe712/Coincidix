@@ -13,7 +13,7 @@ Then you can enter the number of the level you are looking to solve.
 You can then start solving levels. If it has not been registred, go to "data/grille" to do so. It is extremely simple: you only have to specify the coordinates of the smileys. Be carefull, the top left corner is (0,0).
 
 ## Getting started in the project
-All the needed files are in java_src folder. Feel free to fork the repository
+All the needed files are in java folder. Feel free to fork the repository
 It is important to enable assertion as they are used by the program
 
 To compile the archive and run it:
