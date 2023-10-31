@@ -21,11 +21,10 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
-      # we consider that the project is correctly built
-      # - name: Build with Ant
-      #   run: |
-      #     cd java_src
-      #     ant -noinput -buildfile build.xml
+      - name: Build with Ant
+        run: |
+          cd java_src
+          ant -noinput -buildfile build.xml
 
       - name: export jar
         run: |
