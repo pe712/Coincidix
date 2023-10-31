@@ -21,14 +21,14 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
-      - name: Build with Ant
+      - name: Build
         run: |
           cd java
-          ant -noinput -buildfile build.xml
+          javac .\src\main\* -d .\bin\;
 
       - name: export jar
         run: |
-          cd java/bin
+          cd bin
           jar cfmv ../../Coincidix.jar ../MANIFEST.MF main/*.class ../data
 
       - name: Commit files
